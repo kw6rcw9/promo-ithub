@@ -33,15 +33,30 @@ namespace PlayerSystem.TeleportSystem
            {
                if(_queue.Peek().Type == BranchType.Left)
                {
-                   transform.position = new Vector3(-3.61f,3.58f, 0);
-                   
+                   var branch = _queue.Dequeue();
+                   transform.position = branch.TeleportPosition.position;
+               }
+               else
+               {
+                   panel.SetActive(true);
+                   Time.timeScale = 0;
                }
               
            }
            else
            {
-               panel.SetActive(true);
-               Time.timeScale = 0;
+               if(_queue.Peek().Type == BranchType.Right)
+               {
+                   var branch = _queue.Dequeue();
+                   transform.position = branch.TeleportPosition.position;
+                   
+               }
+               else
+               {
+                   panel.SetActive(true);
+                   Time.timeScale = 0;
+                   
+               }
            }
        }
 

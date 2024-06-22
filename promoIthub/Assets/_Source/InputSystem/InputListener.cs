@@ -1,8 +1,8 @@
-using System;
 using PlayerSystem.TeleportSystem;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-namespace PlayerSystem.InputSystem
+namespace InputSystem
 {
     public class InputListener : MonoBehaviour
     {
@@ -13,36 +13,23 @@ namespace PlayerSystem.InputSystem
          {
              _inputSystem = new PlayerInput();
              _inputSystem.Enable();
+             _inputSystem.Player.Move.performed +=ReadMove;
          }
 
-    
+         private void OnDisable()
+         {
+             _inputSystem.Player.Move.performed -= ReadMove;
+         }
+
+
+
+       
         
-
-         void Update()
-        {
-            ReadMove();
-        }
-
-        void ReadMove()
-        {
-            /*var value = _inputSystem.Player.Move.ReadValue<Vector2>();
-            if (value != new Vector2(0, 0))
-            {
-                Debug.Log(value);
-                _teleportPlayer.Teleport(value);
-                
-            }*/
-
-            if (Input.GetKeyDown(KeyCode.A))
-            {
-                _teleportPlayer.Teleport(new Vector2(-1,0));
-                Debug.Log("Pressed A");
-            }
-            if (Input.GetKeyDown(KeyCode.D))
-            {
-                _teleportPlayer.Teleport(new Vector2(1,0));
-                Debug.Log("Pressed D");
-            }
-        }
+    void ReadMove(InputAction.CallbackContext context)
+    {
+        _teleportPlayer.Teleport(context.ReadValue<Vector2>());
     }
+        
+    }
+
 }
