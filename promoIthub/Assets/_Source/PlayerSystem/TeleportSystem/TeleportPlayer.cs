@@ -11,7 +11,7 @@ namespace PlayerSystem.TeleportSystem
         [SerializeField] private GameObject panel;
         private Queue<Branch> _queue;
         
-        // Start is called before the first frame update
+        //Формируется очередь
         void Start()
         {
             _queue = new Queue<Branch>();
@@ -20,13 +20,8 @@ namespace PlayerSystem.TeleportSystem
                 _queue.Enqueue(item);
             }
         }
-
-        // Update is called once per frame
-        void Update()
-        {
         
-        }
-
+        //Принимает вектор и сравнивает с позицией ветки в следующем элементе в очереди
        public  void Teleport(Vector2 value)
        {
            if (value == new Vector2(-1, 0))
@@ -59,10 +54,6 @@ namespace PlayerSystem.TeleportSystem
                }
            }
        }
-
-       public void Lose()
-       {
-           SceneManager.LoadScene(0);
-       }
+       
     }
 }
