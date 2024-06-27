@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using BranchSystem;
 using Cysharp.Threading.Tasks;
+using ScoreSystem;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,9 +12,11 @@ namespace PlayerSystem.TeleportSystem
 {
     public class TeleportPlayer : MonoBehaviour
     {
+        [SerializeField] private int scorePoints;
         [SerializeField] private List<Branch> prefabs;
         [SerializeField] private GameObject panel;
         [Inject] private BranchGenerator _branchGenerator;
+        [Inject] private Score _score;
         public static Action LoseAction;
         public static Action GenerateAction;
         private Queue<Branch> _queue;
@@ -41,10 +44,9 @@ namespace PlayerSystem.TeleportSystem
                {
                    var branch = _queue.Dequeue();
                    transform.position = branch.TeleportPosition.position;
+                   _score.IncreaseScore(scorePoints);
                    if (branch.IsCentered)
                    {
-                       //GenerateAction?.Invoke();
-
                        await _branchGenerator.GenerateBranchesAsync();
                    }
                }
@@ -62,6 +64,7 @@ namespace PlayerSystem.TeleportSystem
                {
                    var branch = _queue.Dequeue();
                    transform.position = branch.TeleportPosition.position;
+                   _score.IncreaseScore(scorePoints);
                    if (branch.IsCentered)
                    {
                          await _branchGenerator.GenerateBranchesAsync();

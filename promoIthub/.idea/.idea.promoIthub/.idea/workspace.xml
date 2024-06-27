@@ -6,17 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="eb25683d-7575-4682-b0b5-a2582ea868cc" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.promoIthub/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.promoIthub/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Presentation/Prefabs/Left.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Presentation/Prefabs/Left.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Presentation/Prefabs/SceneContext.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Presentation/Prefabs/SceneContext.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Presentation/Prefabs/right.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Presentation/Prefabs/right.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Presentation/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Presentation/Scenes/SampleScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Source/BranchSystem/Branch.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Source/BranchSystem/Branch.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Source/BranchSystem/BranchPool.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Source/BranchSystem/BranchPool.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Source/BranchSystem/BranchPool.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Source/BranchSystem/BranchPool.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Source/CoreSystem/Bootstrapper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Source/CoreSystem/Bootstrapper.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Source/CoreSystem/Game.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Source/CoreSystem/Game.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_Source/CoreSystem/Installer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Source/CoreSystem/Installer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Source/InputSystem/InputListener.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Source/InputSystem/InputListener.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_Source/PlayerSystem/TeleportSystem/TeleportPlayer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Source/PlayerSystem/TeleportSystem/TeleportPlayer.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -31,6 +21,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/_Source/CoreSystem/Game.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Source/InputSystem/InputListener.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_Source/PlayerSystem/TeleportSystem/TeleportPlayer.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/_Source/ScoreSystem/ScoreView.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.cysharp.unitask@fbe0bf8515/Runtime/UniTaskScheduler.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="ProjectColorInfo">{
@@ -117,7 +108,7 @@
       <option name="presentableId" value="Default" />
       <updated>1719366660175</updated>
       <workItem from="1719366661511" duration="62000" />
-      <workItem from="1719367243596" duration="31570000" />
+      <workItem from="1719367243596" duration="32596000" />
     </task>
     <servers />
   </component>
