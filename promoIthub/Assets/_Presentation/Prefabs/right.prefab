@@ -27,12 +27,12 @@ Transform:
   m_GameObject: {fileID: 536098410807190069}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.099999994, y: -3.8839002, z: 0}
+  m_LocalPosition: {x: -0.099999994, y: 644.1161, z: 0}
   m_LocalScale: {x: 3, y: 3.1973236, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 600537915895111418}
   - {fileID: 2378302888361926192}
+  - {fileID: 600537915895111418}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &965323646755905261
@@ -99,6 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e550a6ac902de148ad12325511e0345, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <BranchSprite>k__BackingField: {fileID: 0}
   <Type>k__BackingField: 1
   <TeleportPosition>k__BackingField: {fileID: 2378302888361926192}
 --- !u!1 &1480129610068825452

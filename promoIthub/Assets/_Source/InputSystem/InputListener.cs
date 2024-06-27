@@ -1,13 +1,21 @@
+using System;
 using PlayerSystem.TeleportSystem;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Zenject;
 
 namespace InputSystem
 {
     public class InputListener : MonoBehaviour
     {
          private PlayerInput _inputSystem;
-         [SerializeField] private TeleportPlayer _teleportPlayer;
+         [Inject] private TeleportPlayer _teleportPlayer;
+
+         private void OnEnable()
+         {
+             TeleportPlayer.LoseAction += DisabeInput;
+         }
+         
 
          private void Awake()
          {
@@ -19,15 +27,21 @@ namespace InputSystem
          private void OnDisable()
          {
              _inputSystem.Player.Move.performed -= ReadMove;
+             TeleportPlayer.LoseAction -= DisabeInput;
          }
 
 
 
        
         
-    void ReadMove(InputAction.CallbackContext context)
+    async void ReadMove(InputAction.CallbackContext context)
     {
-        _teleportPlayer.Teleport(context.ReadValue<Vector2>());
+        await _teleportPlayer.Teleport(context.ReadValue<Vector2>());
+    }
+
+    void DisabeInput()
+    {
+        _inputSystem.Disable();
     }
         
     }

@@ -8,5 +8,6 @@ public class Game: MonoBehaviour
     public void Restart()
     {
         SceneManager.LoadScene(0);
+        
     }
 }

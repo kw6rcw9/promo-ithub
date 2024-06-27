@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 667940566040208929}
   - component: {fileID: 998769302545322875}
+  - component: {fileID: 1981510408375006057}
   m_Layer: 0
   m_Name: SceneContext
   m_TagString: Untagged
@@ -46,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scriptableObjectInstallers: []
   _monoInstallers:
-  - {fileID: 0}
+  - {fileID: 1981510408375006057}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -64,3 +65,17 @@ MonoBehaviour:
   _parentNewObjectsUnderSceneContext: 0
   _contractNames: []
   _parentContractNames: []
+--- !u!114 &1981510408375006057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1499155570102993330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abf084e0650267c46a55237c3f63b233, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  generator: {fileID: 0}
+  teleportPlayer: {fileID: 0}
