@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using BranchSystem;
 using Cysharp.Threading.Tasks;
 using ScoreSystem;
+using TimerSystem;
+using UI;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -14,9 +16,11 @@ namespace PlayerSystem.TeleportSystem
     {
         [SerializeField] private int scorePoints;
         [SerializeField] private List<Branch> prefabs;
-        [SerializeField] private GameObject panel;
+        [SerializeField] private TimerView timerView;
+        
         [Inject] private BranchGenerator _branchGenerator;
         [Inject] private Score _score;
+        [Inject] private LosePanelView _losePanelView;
         public static Action LoseAction;
         public static Action GenerateAction;
         private Queue<Branch> _queue;
@@ -39,12 +43,15 @@ namespace PlayerSystem.TeleportSystem
        {
            if (value == new Vector2(-1, 0))
            {
+               if(!timerView.enabled)
+                timerView.enabled = true;
                Debug.Log(_queue.Peek().Type);
                if(_queue.Peek().Type == BranchType.Left)
                {
                    var branch = _queue.Dequeue();
                    transform.position = branch.TeleportPosition.position;
                    _score.IncreaseScore(scorePoints);
+                   timerView.Heal();
                    if (branch.IsCentered)
                    {
                        await _branchGenerator.GenerateBranchesAsync();
@@ -52,8 +59,7 @@ namespace PlayerSystem.TeleportSystem
                }
                else
                {
-                   panel.SetActive(true);
-                   Time.timeScale = 0;
+                   _losePanelView.ShowPanel();
                    LoseAction?.Invoke();
                }
               
@@ -62,9 +68,12 @@ namespace PlayerSystem.TeleportSystem
            {
                if(_queue.Peek().Type == BranchType.Right)
                {
+                   if(!timerView.enabled)
+                       timerView.enabled = true;
                    var branch = _queue.Dequeue();
                    transform.position = branch.TeleportPosition.position;
                    _score.IncreaseScore(scorePoints);
+                   timerView.Heal();
                    if (branch.IsCentered)
                    {
                          await _branchGenerator.GenerateBranchesAsync();
@@ -72,8 +81,7 @@ namespace PlayerSystem.TeleportSystem
                }
                else
                {
-                   panel.SetActive(true);
-                   Time.timeScale = 0;
+                  _losePanelView.ShowPanel();
                    LoseAction?.Invoke();
                }
            }

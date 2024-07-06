@@ -1,13 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Game: MonoBehaviour 
+namespace CoreSystem
 {
-    public void Restart()
+    public class Game: MonoBehaviour
     {
-        SceneManager.LoadScene(0);
-        
+        public void Restart()
+        {
+            SceneManager.LoadScene(0);
+        }
     }
 }

@@ -218,6 +218,9 @@ GameObject:
   - component: {fileID: 484533535}
   - component: {fileID: 484533534}
   - component: {fileID: 484533538}
+  - component: {fileID: 484533540}
+  - component: {fileID: 484533539}
+  - component: {fileID: 484533542}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -323,6 +326,45 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 1988552678}
+--- !u!114 &484533539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 484533533}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb2046bab27b4583bf49c15b9abaf11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bar: {fileID: 1781514486}
+--- !u!114 &484533540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 484533533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb265406c557447008e7652f91e55d05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  panel: {fileID: 208608725}
+--- !u!114 &484533542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 484533533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7f5e37b91bc4a73a71c1131e304c116, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timerView: {fileID: 484533539}
 --- !u!1 &508343425
 GameObject:
   m_ObjectHideFlags: 3
@@ -1671,7 +1713,7 @@ MonoBehaviour:
   prefabs:
   - {fileID: 1629424035}
   - {fileID: 1163901710}
-  panel: {fileID: 208608725}
+  timerView: {fileID: 484533539}
 --- !u!1 &1781514484
 GameObject:
   m_ObjectHideFlags: 0
@@ -1684,7 +1726,7 @@ GameObject:
   - component: {fileID: 1781514487}
   - component: {fileID: 1781514486}
   m_Layer: 5
-  m_Name: Image (1)
+  m_Name: timerBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1706,7 +1748,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.38358325, y: 0.8504445}
   m_AnchorMax: {x: 0.61700004, y: 0.9302963}
-  m_AnchoredPosition: {x: -0.1337204, y: -39.130745}
+  m_AnchoredPosition: {x: -0.13372803, y: -39.130745}
   m_SizeDelta: {x: 351.47092, y: 92.23565}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1781514486
@@ -1734,7 +1776,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 1
+  m_FillAmount: 0.5
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -1879,7 +1921,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: -60.851105, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1909,8 +1951,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -782.78, y: 423.08}
-  m_SizeDelta: {x: 258.44, y: 83.83}
+  m_AnchoredPosition: {x: -738.04, y: 423.08}
+  m_SizeDelta: {x: 347.93, y: 83.83}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2028701537
 GameObject:
@@ -2067,8 +2109,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1703533869}
     - target: {fileID: 5149180990415971693, guid: eb97db0f7bfb4444c9b6432901e50718, type: 3}
+      propertyPath: maxPoolSize
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 5149180990415971693, guid: eb97db0f7bfb4444c9b6432901e50718, type: 3}
       propertyPath: restriction
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5158086607267646225, guid: eb97db0f7bfb4444c9b6432901e50718, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2109,6 +2155,14 @@ PrefabInstance:
     - target: {fileID: 5158086607267646225, guid: eb97db0f7bfb4444c9b6432901e50718, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5889523726943799546, guid: eb97db0f7bfb4444c9b6432901e50718, type: 3}
+      propertyPath: stepForHealTimer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5889523726943799546, guid: eb97db0f7bfb4444c9b6432901e50718, type: 3}
+      propertyPath: startValueForTimer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2168,9 +2222,17 @@ PrefabInstance:
       value: SceneContext
       objectReference: {fileID: 0}
     - target: {fileID: 1981510408375006057, guid: bca47a0fb97d19b4fb9005268ed5f0f7, type: 3}
+      propertyPath: timer
+      value: 
+      objectReference: {fileID: 484533542}
+    - target: {fileID: 1981510408375006057, guid: bca47a0fb97d19b4fb9005268ed5f0f7, type: 3}
       propertyPath: generator
       value: 
       objectReference: {fileID: 1330095612}
+    - target: {fileID: 1981510408375006057, guid: bca47a0fb97d19b4fb9005268ed5f0f7, type: 3}
+      propertyPath: losePanelView
+      value: 
+      objectReference: {fileID: 484533540}
     - target: {fileID: 1981510408375006057, guid: bca47a0fb97d19b4fb9005268ed5f0f7, type: 3}
       propertyPath: teleportPlayer
       value: 
