@@ -36,6 +36,7 @@ namespace InputSystem
         
     async void ReadMove(InputAction.CallbackContext context)
     {
+        print(context.ReadValue<Vector2>());
         await _teleportPlayer.Teleport(context.ReadValue<Vector2>());
     }
 

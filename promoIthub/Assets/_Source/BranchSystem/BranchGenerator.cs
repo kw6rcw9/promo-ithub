@@ -29,18 +29,18 @@ namespace BranchSystem
         private Branch _initialBranch;
         public void Init()
         {
-            leftPrefab.TryGetComponent(out Branch leftBranch);
-            _leftBranch = leftBranch;
-            _leftBranch.IsCentered = leftBranch.IsCentered;
-            _leftBranch.BranchSprite = leftBranch.BranchSprite;
-            _leftBranch.TeleportPosition = leftBranch.TeleportPosition;
-            _leftBranch.Type = BranchType.Left;
-            rightPrefab.TryGetComponent(out Branch rightBranch);
-            _rightBranch = rightBranch;
-            _rightBranch.IsCentered = rightBranch.IsCentered;
-            _rightBranch.BranchSprite = rightBranch.BranchSprite;
-            _rightBranch.TeleportPosition = rightBranch.TeleportPosition;
-            _rightBranch.Type = BranchType.Right;
+            // leftPrefab.TryGetComponent(out Branch leftBranch);
+            // _leftBranch = leftBranch;
+            // _leftBranch.IsCentered = leftBranch.IsCentered;
+            // _leftBranch.BranchSprite = leftBranch.BranchSprite;
+            // _leftBranch.TeleportPosition = leftBranch.TeleportPosition;
+            // _leftBranch.Type = BranchType.Left;
+            // rightPrefab.TryGetComponent(out Branch rightBranch);
+            // _rightBranch = rightBranch;
+            // _rightBranch.IsCentered = rightBranch.IsCentered;
+            // _rightBranch.BranchSprite = rightBranch.BranchSprite;
+            // _rightBranch.TeleportPosition = rightBranch.TeleportPosition;
+            // _rightBranch.Type = BranchType.Right;
             _pool.InitPool(leftPrefab, maxPoolSize, parent);
             GenerateInitPool();
             //player.transform.position = genBranchList[0].TeleportPosition.position;
@@ -52,6 +52,10 @@ namespace BranchSystem
             if (!_positionChanged)
             {
                 player.transform.position = _startPoint.position;
+                if (player.transform.position.x > 0)
+                {
+                    player.transform.rotation = new Quaternion(0,-180,0, 0);
+                }
                 _positionChanged = true;
             }
         }
@@ -86,34 +90,35 @@ namespace BranchSystem
                 {
 
                     case 0:
-                        branchInstance.transform.rotation = new Quaternion(0,-180,0, 0);
-                        instance.Type = _leftBranch.Type;
-                        instance.BranchSprite = _leftBranch.BranchSprite;
+                        //branchInstance.transform.rotation = new Quaternion(0,-180,0, 0);
+                        instance.Type = BranchType.Left;
+                        instance.BranchSprite = Resources.Load<Sprite>("left");
                         instance.IsCentered = false;
+                        instance.TeleportPosition = branchInstance.transform.GetChild(0);
                         break;
                     case 1:
-                        branchInstance.transform.rotation = new Quaternion(0,0,0, 0);
-                        instance.Type = _rightBranch.Type;
-                        instance.BranchSprite = _rightBranch.BranchSprite;
+                        //branchInstance.transform.rotation = new Quaternion(0,0,0, 0);
+                        instance.Type = BranchType.Right;
+                        instance.BranchSprite = Resources.Load<Sprite>("right");
                         instance.IsCentered = false;
-                        //TODO instance.TeleportPosition = branchInstance.transform.GetChild(1);
+                        instance.TeleportPosition = branchInstance.transform.GetChild(1);
                         break;
                 }
 
 
-                _yTrans += 3;
+                _yTrans += 2;
                 branchInstance.transform.position = new Vector3(0, _yTrans , 0);
                 
                 if (i == 0 && firstGenerate)
                 {
                     _startPoint = instance.TeleportPosition;
-                    _initialBranch = instance;
-                    continue;
+                    //_initialBranch = instance;
+                    
                 }
 
                 if (i == 1 && firstGenerate)
                     instance.IsCentered = true;
-                if(i == 0)
+                if(i == 0 && !firstGenerate)
                     instance.IsCentered = true;
                 
 
@@ -211,11 +216,11 @@ namespace BranchSystem
             
             Debug.Log("Finished return");
             _prevGenBranchList.Clear();
-            if (_initialBranch != null)
-            {
-                _prevGenBranchList.Add(_initialBranch);
-                _initialBranch = null;
-            }
+            // if (_initialBranch != null)
+            // {
+            //     _prevGenBranchList.Add(_initialBranch);
+            //     _initialBranch = null;
+            // }
             foreach (var branch in _genBranchList)
             {
                 _prevGenBranchList.Add(branch);

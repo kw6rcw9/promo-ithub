@@ -50,6 +50,17 @@
                     "isPartOfComposite": true
                 },
                 {
+                    "name": "up",
+                    "id": "096e6f1d-1eb9-436c-8c09-979c3c3d456c",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
                     "name": "Arrows",
                     "id": "33b9bcab-1773-42ef-b408-a5523da6e40a",
                     "path": "2DVector",
@@ -75,6 +86,17 @@
                     "name": "right",
                     "id": "b6dc208f-fa8a-42c2-b52d-8ac965af96fa",
                     "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "up",
+                    "id": "896ccec1-dcd6-4b71-bdd1-d8a03184bc66",
+                    "path": "<Keyboard>/upArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "PC",
