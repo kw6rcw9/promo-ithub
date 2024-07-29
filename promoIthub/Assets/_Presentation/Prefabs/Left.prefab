@@ -80,6 +80,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   branchSprite: {fileID: 0}
+  Collider2d: {fileID: 0}
   <Type>k__BackingField: 0
   <TeleportPosition>k__BackingField: {fileID: 6380524441657557794}
   <IsCentered>k__BackingField: 0

@@ -22,21 +22,25 @@ namespace InputSystem
              _inputSystem = new PlayerInput();
              _inputSystem.Enable();
              _inputSystem.Player.Move.performed +=ReadMove;
+             _inputSystem.Player.Jump.performed += Jump;
          }
 
          private void OnDisable()
          {
              _inputSystem.Player.Move.performed -= ReadMove;
+             _inputSystem.Player.Jump.performed -= Jump;
              TeleportPlayer.LoseAction -= DisabeInput;
          }
 
 
 
-       
+         void Jump(InputAction.CallbackContext context)
+         {
+             _teleportPlayer.Jump();
+         }
         
     async void ReadMove(InputAction.CallbackContext context)
     {
-        print(context.ReadValue<Vector2>());
         await _teleportPlayer.Teleport(context.ReadValue<Vector2>());
     }
 

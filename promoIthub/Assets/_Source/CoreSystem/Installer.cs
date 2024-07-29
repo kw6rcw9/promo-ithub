@@ -14,6 +14,7 @@ namespace CoreSystem
         [SerializeField] private BranchGenerator generator;
         [SerializeField] private TeleportPlayer teleportPlayer;
         [SerializeField] private LosePanelView losePanelView;
+        [SerializeField] private TimerView timerView;
         [SerializeField] private Timer timer;
         public override void InstallBindings()
         {
@@ -21,8 +22,10 @@ namespace CoreSystem
             Container.Bind<TeleportPlayer>().FromInstance(teleportPlayer).AsTransient().NonLazy();
             Container.Bind<BranchPool>().AsTransient().NonLazy();
             Container.Bind<Score>().AsTransient().NonLazy();
+            Container.Bind<TimerView>().FromInstance(timerView).AsTransient().NonLazy();
             Container.Bind<Timer>().FromInstance(timer).AsTransient().NonLazy();
             Container.Bind<LosePanelView>().FromInstance(losePanelView).AsTransient().NonLazy();
+            
         }
     }
 }

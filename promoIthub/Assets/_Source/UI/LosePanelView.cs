@@ -10,16 +10,6 @@ namespace UI
     {
         [SerializeField] private GameObject panel;
 
-        private void OnEnable()
-        {
-            Timer.TimerLoseAction += ShowPanel;
-        }
-
-        private void OnDisable()
-        {
-            Timer.TimerLoseAction -= ShowPanel;
-        }
-
         public void ShowPanel()
         {
             panel.SetActive(true);

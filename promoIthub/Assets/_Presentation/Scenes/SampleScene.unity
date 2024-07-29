@@ -523,7 +523,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7f5e37b91bc4a73a71c1131e304c116, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timerView: {fileID: 484533539}
+  maxTime: 0
+  timeLeft: 0
+  initTimerVal: 0
+  heal: 0
 --- !u!1 &497310104
 GameObject:
   m_ObjectHideFlags: 0
@@ -847,6 +850,32 @@ Transform:
   m_Children: []
   m_Father: {fileID: 945563447}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &717262057 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1499155570102993330, guid: bca47a0fb97d19b4fb9005268ed5f0f7, type: 3}
+  m_PrefabInstance: {fileID: 2648069481944937546}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &717262061
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 717262057}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5eaeb0900d5d741aeb935cf46dd52c81, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &776117305
 GameObject:
   m_ObjectHideFlags: 0
@@ -1263,6 +1292,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   branchSprite: {fileID: 0}
+  Collider2d: {fileID: 0}
   <Type>k__BackingField: 1
   <TeleportPosition>k__BackingField: {fileID: 682797785}
   <IsCentered>k__BackingField: 0
@@ -1564,6 +1594,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   branchSprite: {fileID: 0}
+  Collider2d: {fileID: 0}
   <Type>k__BackingField: 1
   <TeleportPosition>k__BackingField: {fileID: 1979234631}
   <IsCentered>k__BackingField: 0
@@ -2216,6 +2247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   branchSprite: {fileID: 0}
+  Collider2d: {fileID: 0}
   <Type>k__BackingField: 0
   <TeleportPosition>k__BackingField: {fileID: 1534939379}
   <IsCentered>k__BackingField: 0
@@ -2230,6 +2262,8 @@ GameObject:
   - component: {fileID: 1703533871}
   - component: {fileID: 1703533870}
   - component: {fileID: 1703533872}
+  - component: {fileID: 1703533873}
+  - component: {fileID: 1703533874}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -2316,11 +2350,64 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72218fb1a8d475a4fa9da1081495c1dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scorePoints: 10
+  camera: {fileID: 928926745}
+  endValue: {x: 0, y: 0}
+  jumpPower: 0.8
+  duration: 0.4
+  scorePoints: 1
   prefabs:
   - {fileID: 1629424035}
   - {fileID: 1163901710}
   timerView: {fileID: 484533539}
+  rb: {fileID: 1703533874}
+--- !u!95 &1703533873
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1703533869}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3efd6affe4a1b4266939eb56bba531af, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!50 &1703533874
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1703533869}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1777048132
 GameObject:
   m_ObjectHideFlags: 0
@@ -2921,6 +3008,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1330095612}
     - target: {fileID: 1981510408375006057, guid: bca47a0fb97d19b4fb9005268ed5f0f7, type: 3}
+      propertyPath: timerView
+      value: 
+      objectReference: {fileID: 484533539}
+    - target: {fileID: 1981510408375006057, guid: bca47a0fb97d19b4fb9005268ed5f0f7, type: 3}
       propertyPath: losePanelView
       value: 
       objectReference: {fileID: 484533540}
@@ -2931,7 +3022,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1499155570102993330, guid: bca47a0fb97d19b4fb9005268ed5f0f7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 717262061}
   m_SourcePrefab: {fileID: 100100000, guid: bca47a0fb97d19b4fb9005268ed5f0f7, type: 3}
 --- !u!1001 &3932556673533384895
 PrefabInstance:

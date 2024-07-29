@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using BranchSystem;
+using Cinemachine;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using ScoreSystem;
 using TimerSystem;
 using UI;
@@ -14,10 +17,14 @@ namespace PlayerSystem.TeleportSystem
 {
     public class TeleportPlayer : MonoBehaviour
     {
+        [SerializeField] private CinemachineVirtualCamera camera;
+        [SerializeField] private Vector2 endValue;
+        [SerializeField] private float jumpPower;
+        [SerializeField] private float duration;
         [SerializeField] private int scorePoints;
         [SerializeField] private List<Branch> prefabs;
         [SerializeField] private TimerView timerView;
-        
+        [SerializeField] private Rigidbody2D rb;
         [Inject] private BranchGenerator _branchGenerator;
         [Inject] private Score _score;
         [Inject] private LosePanelView _losePanelView;
@@ -26,9 +33,13 @@ namespace PlayerSystem.TeleportSystem
         private Queue<Branch> _queue;
         private Branch currBranch;
         private bool _firstGenerate = false;
+        private Vector2 _leftD;
+        private Vector2 _rightD; 
+        private Vector2 _upD; 
+
         
         //Формируется очередь
-       
+        
 
         public void SendNewBranches(List<Branch> list)
         {
@@ -44,7 +55,7 @@ namespace PlayerSystem.TeleportSystem
                 if (_firstGenerate)
                 {
                     currBranch = _queue.Dequeue();
-                    Debug.Log(currBranch.transform.position);
+                    endValue = currBranch.TeleportPosition.position;
                     _firstGenerate = false;
                 }
             }
@@ -60,17 +71,26 @@ namespace PlayerSystem.TeleportSystem
                Debug.Log(_queue.Peek().Type);
                if(_queue.Peek().Type == currBranch.Type)
                {
+                   
                    currBranch = _queue.Dequeue();
-                   transform.position = currBranch.TeleportPosition.position;
+             
+                   //Debug.Log(currBranch.TeleportPosition.position - transform.position);
+                   //transform.position = currBranch.TeleportPosition.position;
                    _score.IncreaseScore(scorePoints);
                    timerView.Heal();
+                   Jump();
+                 
                    if (currBranch.IsCentered)
                    {
                        await _branchGenerator.GenerateBranchesAsync();
                    }
+
                }
                else
                {
+                   DeathJump(new Vector2(0, 2));
+                   await UniTask.Delay(2000, DelayType.DeltaTime);
+
                    _losePanelView.ShowPanel();
                    LoseAction?.Invoke();
                }
@@ -81,13 +101,16 @@ namespace PlayerSystem.TeleportSystem
                if(!timerView.enabled)
                 timerView.enabled = true;
                Debug.Log(_queue.Peek().Type);
-               if(_queue.Peek().Type == BranchType.Left && _queue.Peek().Type != currBranch.Type)
+               if(_queue.Peek().Type == BranchType.Left)
                {
                    currBranch = _queue.Dequeue();
-                   transform.position = currBranch.TeleportPosition.position;
-                   transform.rotation = new Quaternion(0,0,0, 0);
+                   
+                   Debug.Log(currBranch.TeleportPosition.position - transform.position);
+                   //transform.position = currBranch.TeleportPosition.position;
+                   transform.rotation = new Quaternion(0,-180,0, 0);
                    _score.IncreaseScore(scorePoints);
                    timerView.Heal();
+                   Jump();
                    if (currBranch.IsCentered)
                    {
                        await _branchGenerator.GenerateBranchesAsync();
@@ -95,6 +118,13 @@ namespace PlayerSystem.TeleportSystem
                }
                else
                {
+                   if(currBranch.Type == BranchType.Left)
+                    DeathJump(new Vector2(-2.56f, 2));
+                   else
+                   {
+                       DeathJump(new Vector2(-4.56f, 2));
+                   }
+                   await UniTask.Delay(2000, DelayType.DeltaTime);
                    _losePanelView.ShowPanel();
                    LoseAction?.Invoke();
                }
@@ -102,15 +132,17 @@ namespace PlayerSystem.TeleportSystem
            }
            else
            {
-               if(_queue.Peek().Type == BranchType.Right && _queue.Peek().Type != currBranch.Type)
+               if(_queue.Peek().Type == BranchType.Right )
                {
                    if(!timerView.enabled)
                        timerView.enabled = true;
                    currBranch = _queue.Dequeue();
-                   transform.position = currBranch.TeleportPosition.position;
-                   transform.rotation = new Quaternion(0,-180,0, 0);
+                   Debug.Log(currBranch.TeleportPosition.position - transform.position);
+                   //transform.position = currBranch.TeleportPosition.position;
+                   transform.rotation = new Quaternion(0,0,0, 0);
                    _score.IncreaseScore(scorePoints);
                    timerView.Heal();
+                   Jump();
                    if (currBranch.IsCentered)
                    {
                          await _branchGenerator.GenerateBranchesAsync();
@@ -118,11 +150,43 @@ namespace PlayerSystem.TeleportSystem
                }
                else
                {
+                   if(currBranch.Type == BranchType.Right)
+                       DeathJump(new Vector2(2.56f, 2));
+                   else
+                   {
+                       DeathJump(new Vector2(4.56f, 2));
+                   }
+                   await UniTask.Delay(2000, DelayType.DeltaTime);
+
                   _losePanelView.ShowPanel();
                    LoseAction?.Invoke();
                }
            }
        }
-       
+
+       public void DeathJump(Vector2 vector)
+       {
+           endValue += vector;
+
+           transform.DOJump(endValue, jumpPower, 1, duration)
+               .OnComplete(DisableKinematic);
+
+       }
+       public void Jump()
+       {
+           
+           //print($"fff: {(currBranch.TeleportPosition.position.x - endValue.x)}, {currBranch.TeleportPosition.position.y - endValue.y}");
+           endValue = currBranch.TeleportPosition.position;
+           print("jump");
+           //rb.AddForce(new Vector2(speedLeft, speedUp));
+           transform.DOJump(endValue, jumpPower, 1, duration);
+       }
+
+       private void DisableKinematic()
+       {
+           rb.isKinematic = false;
+           camera.Follow = null;
+       }
+
     }
 }

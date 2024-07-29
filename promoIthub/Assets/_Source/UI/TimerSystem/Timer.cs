@@ -8,40 +8,22 @@ using Zenject;
 namespace TimerSystem
 {
     public class Timer: MonoBehaviour
+    
     {
-        [SerializeField] private TimerView timerView;
-        public static Action TimerLoseAction;
-        public float Value { get; set; }
+    [Inject] private TimerView _timerView;
+    [SerializeField] private float maxTime;
+    [SerializeField]private float timeLeft;
+    [SerializeField]private float initTimerVal;
+    [SerializeField] private float heal;
 
-        public IEnumerator StartTimer(int startVal)
-        {
-            Value = startVal;
-            Debug.Log("Here");
-            timerView.SetStartTimer(startVal);
-            while (Value > 0)
-            {
-                DecreaseTimer(1);
-                yield return new WaitForSecondsRealtime(1);
-            }
-           
-        }
-        public void IncreaseTimer(float val)
-        {
-            Value += val;
-           
-        }
+    private void Start()
+    {
+        
+    }
 
-        public void DecreaseTimer(float val)
-        {
-            Value -= val;
-            Debug.Log(Value);
-           //timerView.UpdateTimer(Value);
-            if (Value < 0)
-            {
-                TimerLoseAction?.Invoke();
-            }
-                
-
-        }
+    private void Update()
+    {
+        
+    }
     }
 }
