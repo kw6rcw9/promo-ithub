@@ -6,16 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="eb25683d-7575-4682-b0b5-a2582ea868cc" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.promoIthub/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.promoIthub/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Presentation/Prefabs/Left.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Presentation/Prefabs/Left.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Presentation/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Presentation/Scenes/SampleScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Source/BranchSystem/Branch.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Source/BranchSystem/Branch.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Source/CoreSystem/Installer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Source/CoreSystem/Installer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Source/InputSystem/Cfg/PlayerInput.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Source/InputSystem/Cfg/PlayerInput.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Source/InputSystem/Cfg/PlayerInput.inputactions" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Source/InputSystem/Cfg/PlayerInput.inputactions" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Source/InputSystem/InputListener.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Source/InputSystem/InputListener.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Source/PlayerSystem/TeleportSystem/TeleportPlayer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Source/PlayerSystem/TeleportSystem/TeleportPlayer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Source/UI/LosePanelView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Source/UI/LosePanelView.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Source/UI/TimerSystem/Timer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Source/UI/TimerSystem/Timer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Source/UI/TimerSystem/TimerView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Source/UI/TimerSystem/TimerView.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -123,7 +114,7 @@
       <workItem from="1719532116758" duration="6993000" />
       <workItem from="1720279068714" duration="8451000" />
       <workItem from="1721618103002" duration="5000" />
-      <workItem from="1721618118546" duration="13548000" />
+      <workItem from="1721618118546" duration="15062000" />
     </task>
     <servers />
   </component>

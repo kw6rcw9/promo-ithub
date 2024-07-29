@@ -1,4 +1,5 @@
 using System;
+using Cinemachine;
 using DG.Tweening;
 using UI;
 using UnityEngine;
@@ -9,7 +10,9 @@ namespace TimerSystem
 {
     public class TimerView : MonoBehaviour
     {
+        [SerializeField] private CinemachineVirtualCamera camera;
         [SerializeField] private Image bar;
+        [SerializeField] private Rigidbody2D rb;
         [Inject] private LosePanelView _losePanelView;
         private float _maxTimer = 10;
         private float _timeLeft;
@@ -39,7 +42,10 @@ namespace TimerSystem
             }
             else
             {
-                _losePanelView.ShowPanel();
+                rb.isKinematic = false;
+                camera.Follow = null;
+                Invoke("DisableKinematic", 1.5f);
+                
             }
         }
 
@@ -57,6 +63,12 @@ namespace TimerSystem
         {
             _maxTimer = val;
             bar.fillAmount = val / 10;
+        }
+
+        public void DisableKinematic()
+        {
+           
+            _losePanelView.ShowPanel();
         }
     }
 }
