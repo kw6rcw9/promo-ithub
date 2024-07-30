@@ -492,7 +492,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 484533533}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb2046bab27b4583bf49c15b9abaf11, type: 3}
   m_Name: 
@@ -520,15 +520,19 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 484533533}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f7f5e37b91bc4a73a71c1131e304c116, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxTime: 0
+  camera: {fileID: 928926745}
+  rb: {fileID: 1703533874}
+  maxTime: 10
   timeLeft: 0
-  initTimerVal: 0
-  heal: 0
+  initTimerVal: 5
+  heal: 0.5
+  reduceTimerAmount: 0.5
+  maxTimeLeft: 1
 --- !u!1 &497310104
 GameObject:
   m_ObjectHideFlags: 0
@@ -2352,6 +2356,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72218fb1a8d475a4fa9da1081495c1dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  branchAmountToReduceTimer: 10
   camera: {fileID: 928926745}
   endValue: {x: 0, y: 0}
   jumpPower: 0.8
@@ -2360,7 +2365,6 @@ MonoBehaviour:
   prefabs:
   - {fileID: 1629424035}
   - {fileID: 1163901710}
-  timerView: {fileID: 484533539}
   rb: {fileID: 1703533874}
 --- !u!95 &1703533873
 Animator:

@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="eb25683d-7575-4682-b0b5-a2582ea868cc" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.promoIthub/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.promoIthub/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Source/UI/TimerSystem/TimerView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Source/UI/TimerSystem/TimerView.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_Source/PlayerSystem/TeleportSystem/TeleportPlayer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_Source/PlayerSystem/TeleportSystem/TeleportPlayer.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,7 +114,8 @@
       <workItem from="1719532116758" duration="6993000" />
       <workItem from="1720279068714" duration="8451000" />
       <workItem from="1721618103002" duration="5000" />
-      <workItem from="1721618118546" duration="15062000" />
+      <workItem from="1721618118546" duration="15652000" />
+      <workItem from="1722271712937" duration="838000" />
     </task>
     <servers />
   </component>

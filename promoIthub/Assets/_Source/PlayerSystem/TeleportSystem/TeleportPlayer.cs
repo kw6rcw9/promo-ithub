@@ -5,6 +5,7 @@ using BranchSystem;
 using Cinemachine;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using InputSystem;
 using ScoreSystem;
 using TimerSystem;
 using UI;
@@ -12,24 +13,28 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Zenject;
+using Timer = TimerSystem.Timer;
 
 namespace PlayerSystem.TeleportSystem
 {
     public class TeleportPlayer : MonoBehaviour
     {
+        [Header("Extra Mechanic")] 
+        [SerializeField] private int branchAmountToReduceTimer;
         [SerializeField] private CinemachineVirtualCamera camera;
         [SerializeField] private Vector2 endValue;
         [SerializeField] private float jumpPower;
         [SerializeField] private float duration;
         [SerializeField] private int scorePoints;
         [SerializeField] private List<Branch> prefabs;
-        [SerializeField] private TimerView timerView;
+        [Inject] private Timer timer;
         [SerializeField] private Rigidbody2D rb;
         [Inject] private BranchGenerator _branchGenerator;
         [Inject] private Score _score;
         [Inject] private LosePanelView _losePanelView;
         public static Action LoseAction;
         public static Action GenerateAction;
+        private int _passBranchesAmount;
         private Queue<Branch> _queue;
         private Branch currBranch;
         private bool _firstGenerate = false;
@@ -64,10 +69,17 @@ namespace PlayerSystem.TeleportSystem
         //Принимает вектор и сравнивает с позицией ветки в следующем элементе в очереди
        public  async UniTask Teleport(Vector2 value)
        {
+           _passBranchesAmount++;
+           if (_passBranchesAmount == branchAmountToReduceTimer)
+           {
+               timer.ReduceMaxTimer();
+               print("REDUCED");
+               _passBranchesAmount = 0;
+           }
            if (value == new Vector2(0, 1))
            {
-               if(!timerView.enabled)
-                   timerView.enabled = true;
+               if(!timer.enabled)
+                   timer.enabled = true;
                Debug.Log(_queue.Peek().Type);
                if(_queue.Peek().Type == currBranch.Type)
                {
@@ -77,7 +89,7 @@ namespace PlayerSystem.TeleportSystem
                    //Debug.Log(currBranch.TeleportPosition.position - transform.position);
                    //transform.position = currBranch.TeleportPosition.position;
                    _score.IncreaseScore(scorePoints);
-                   timerView.Heal();
+                   timer.Heal();
                    Jump();
                  
                    if (currBranch.IsCentered)
@@ -88,18 +100,18 @@ namespace PlayerSystem.TeleportSystem
                }
                else
                {
+                   LoseAction?.Invoke();
                    DeathJump(new Vector2(0, 2));
                    await UniTask.Delay(2000, DelayType.DeltaTime);
 
                    _losePanelView.ShowPanel();
-                   LoseAction?.Invoke();
                }
 
            }
            else if (value == new Vector2(-1, 0))
            {
-               if(!timerView.enabled)
-                timerView.enabled = true;
+               if(!timer.enabled)
+                timer.enabled = true;
                Debug.Log(_queue.Peek().Type);
                if(_queue.Peek().Type == BranchType.Left)
                {
@@ -109,7 +121,7 @@ namespace PlayerSystem.TeleportSystem
                    //transform.position = currBranch.TeleportPosition.position;
                    transform.rotation = new Quaternion(0,-180,0, 0);
                    _score.IncreaseScore(scorePoints);
-                   timerView.Heal();
+                   timer.Heal();
                    Jump();
                    if (currBranch.IsCentered)
                    {
@@ -118,6 +130,7 @@ namespace PlayerSystem.TeleportSystem
                }
                else
                {
+                   LoseAction?.Invoke();
                    if(currBranch.Type == BranchType.Left)
                     DeathJump(new Vector2(-2.56f, 2));
                    else
@@ -126,7 +139,6 @@ namespace PlayerSystem.TeleportSystem
                    }
                    await UniTask.Delay(2000, DelayType.DeltaTime);
                    _losePanelView.ShowPanel();
-                   LoseAction?.Invoke();
                }
               
            }
@@ -134,14 +146,14 @@ namespace PlayerSystem.TeleportSystem
            {
                if(_queue.Peek().Type == BranchType.Right )
                {
-                   if(!timerView.enabled)
-                       timerView.enabled = true;
+                   if(!timer.enabled)
+                       timer.enabled = true;
                    currBranch = _queue.Dequeue();
                    Debug.Log(currBranch.TeleportPosition.position - transform.position);
                    //transform.position = currBranch.TeleportPosition.position;
                    transform.rotation = new Quaternion(0,0,0, 0);
                    _score.IncreaseScore(scorePoints);
-                   timerView.Heal();
+                   timer.Heal();
                    Jump();
                    if (currBranch.IsCentered)
                    {
@@ -150,6 +162,7 @@ namespace PlayerSystem.TeleportSystem
                }
                else
                {
+                   LoseAction?.Invoke();
                    if(currBranch.Type == BranchType.Right)
                        DeathJump(new Vector2(2.56f, 2));
                    else
@@ -159,7 +172,6 @@ namespace PlayerSystem.TeleportSystem
                    await UniTask.Delay(2000, DelayType.DeltaTime);
 
                   _losePanelView.ShowPanel();
-                   LoseAction?.Invoke();
                }
            }
        }
