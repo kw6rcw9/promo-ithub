@@ -10,6 +10,7 @@ namespace InputSystem
     {
          private PlayerInput _inputSystem;
          [Inject] private TeleportPlayer _teleportPlayer;
+         [Inject] private Animator _animator;
 
          private void OnEnable()
          {
@@ -47,6 +48,7 @@ namespace InputSystem
     void DisabeInput()
     {
         _inputSystem.Disable();
+        _animator.SetTrigger("Fall");
     }
         
     }

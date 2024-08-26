@@ -11,6 +11,7 @@ namespace CoreSystem
     public class Installer : MonoInstaller
 
     {
+        [SerializeField] private Animator animator;
         [SerializeField] private BranchGenerator generator;
         [SerializeField] private TeleportPlayer teleportPlayer;
         [SerializeField] private LosePanelView losePanelView;
@@ -25,6 +26,7 @@ namespace CoreSystem
             Container.Bind<TimerView>().FromInstance(timerView).AsTransient().NonLazy();
             Container.Bind<Timer>().FromInstance(timer).AsTransient().NonLazy();
             Container.Bind<LosePanelView>().FromInstance(losePanelView).AsTransient().NonLazy();
+            Container.Bind<Animator>().FromInstance(animator).AsTransient().NonLazy();
             
         }
     }

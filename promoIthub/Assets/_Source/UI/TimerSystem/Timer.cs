@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using Cinemachine;
 using CoreSystem;
+using PlayerSystem.TeleportSystem;
 using UI;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -24,6 +25,8 @@ namespace TimerSystem
     [Header("Extra Mechanic")]
     [SerializeField] private float reduceTimerAmount;
     [SerializeField] private float maxTimeLeft;
+    private bool _isEnd = true;
+    private bool _isRunning = true;
 
     private void Start()
     {
@@ -33,16 +36,22 @@ namespace TimerSystem
 
     private void Update()
     {
-        if (timeLeft > 0)
+        if (timeLeft > 0 && _isRunning)
         {
             timeLeft -= Time.deltaTime;
            _timerView.UpdateTimerView(timeLeft, maxTime);
         }
         else
         {
-            rb.isKinematic = false;
-            camera.Follow = null;
-            Invoke("DisableKinematic", 1.5f);
+            if (_isEnd)
+            {
+                _isEnd = false;
+                rb.isKinematic = false;
+                camera.Follow = null;
+                TeleportPlayer.LoseAction?.Invoke();
+                Invoke("DisableKinematic", 1.5f);
+                
+            }
                 
         }
     }
@@ -64,10 +73,16 @@ namespace TimerSystem
         }
     }
     
-    public void DisableKinematic()
-    {
-           
-        _losePanelView.ShowPanel();
+        public void DisableKinematic()
+        {
+               print("какого хуя");
+            _losePanelView.ShowPanel();
+        }
+        public void Stop()
+        {
+            _isRunning = false;
+            _isEnd = false;
+        }
     }
-    }
+    
 }

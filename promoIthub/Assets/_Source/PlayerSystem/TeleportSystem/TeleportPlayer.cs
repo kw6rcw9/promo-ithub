@@ -32,6 +32,7 @@ namespace PlayerSystem.TeleportSystem
         [Inject] private BranchGenerator _branchGenerator;
         [Inject] private Score _score;
         [Inject] private LosePanelView _losePanelView;
+        [SerializeField] private Animator animator;
         public static Action LoseAction;
         public static Action GenerateAction;
         private int _passBranchesAmount;
@@ -100,6 +101,7 @@ namespace PlayerSystem.TeleportSystem
                }
                else
                {
+                   timer.Stop();
                    LoseAction?.Invoke();
                    DeathJump(new Vector2(0, 2));
                    await UniTask.Delay(2000, DelayType.DeltaTime);
@@ -130,6 +132,7 @@ namespace PlayerSystem.TeleportSystem
                }
                else
                {
+                   timer.Stop();
                    LoseAction?.Invoke();
                    if(currBranch.Type == BranchType.Left)
                     DeathJump(new Vector2(-2.56f, 2));
@@ -162,6 +165,8 @@ namespace PlayerSystem.TeleportSystem
                }
                else
                {
+                   print("death");
+                   timer.Stop();
                    LoseAction?.Invoke();
                    if(currBranch.Type == BranchType.Right)
                        DeathJump(new Vector2(2.56f, 2));
@@ -178,6 +183,7 @@ namespace PlayerSystem.TeleportSystem
 
        public void DeathJump(Vector2 vector)
        {
+           
            endValue += vector;
 
            transform.DOJump(endValue, jumpPower, 1, duration)
@@ -196,6 +202,7 @@ namespace PlayerSystem.TeleportSystem
 
        private void DisableKinematic()
        {
+           
            rb.isKinematic = false;
            camera.Follow = null;
        }
