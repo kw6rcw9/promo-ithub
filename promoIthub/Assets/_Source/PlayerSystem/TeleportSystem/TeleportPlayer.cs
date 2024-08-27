@@ -121,7 +121,7 @@ namespace PlayerSystem.TeleportSystem
                    
                    Debug.Log(currBranch.TeleportPosition.position - transform.position);
                    //transform.position = currBranch.TeleportPosition.position;
-                   transform.rotation = new Quaternion(0,-180,0, 0);
+                   transform.rotation = new Quaternion(0,0,0, 0);
                    _score.IncreaseScore(scorePoints);
                    timer.Heal();
                    Jump();
@@ -154,7 +154,7 @@ namespace PlayerSystem.TeleportSystem
                    currBranch = _queue.Dequeue();
                    Debug.Log(currBranch.TeleportPosition.position - transform.position);
                    //transform.position = currBranch.TeleportPosition.position;
-                   transform.rotation = new Quaternion(0,0,0, 0);
+                   transform.rotation = new Quaternion(0,-180,0, 0);
                    _score.IncreaseScore(scorePoints);
                    timer.Heal();
                    Jump();

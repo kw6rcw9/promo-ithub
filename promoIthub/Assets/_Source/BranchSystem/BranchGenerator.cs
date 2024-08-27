@@ -106,7 +106,7 @@ namespace BranchSystem
                 }
 
 
-                _yTrans += 2;
+                _yTrans += 2.6f;
                 branchInstance.transform.position = new Vector3(0, _yTrans , 0);
                 
                 if (i == 0 && firstGenerate)
