@@ -4,13 +4,13 @@ namespace ScoreSystem
 {
     public class Score
     {
-        private int _score;
+        public static int ScoreCount { get;  set; } 
         public static Action<int> ScoreChanged;
 
         public void IncreaseScore(int num)
         {
-            _score += num;
-            ScoreChanged?.Invoke(_score);
+            ScoreCount += num;
+            ScoreChanged?.Invoke(ScoreCount);
         }
     }
 }

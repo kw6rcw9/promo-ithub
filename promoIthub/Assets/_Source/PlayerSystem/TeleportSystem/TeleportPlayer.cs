@@ -1,19 +1,18 @@
 using System;
 using System.Collections.Generic;
-using System.Threading;
+using BackendSystem.Core;
+using BackendSystem.Repositories;
 using BranchSystem;
 using Cinemachine;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
-using InputSystem;
 using ScoreSystem;
-using TimerSystem;
 using UI;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Zenject;
 using Timer = TimerSystem.Timer;
+using R3;
+using SoundSystem;
 
 namespace PlayerSystem.TeleportSystem
 {
@@ -29,12 +28,16 @@ namespace PlayerSystem.TeleportSystem
         [SerializeField] private List<Branch> prefabs;
         [Inject] private Timer timer;
         [SerializeField] private Rigidbody2D rb;
+       
         [Inject] private BranchGenerator _branchGenerator;
         [Inject] private Score _score;
         [Inject] private LosePanelView _losePanelView;
+        [Inject] private PlayerScoreController _playerScoreController;
         [SerializeField] private Animator animator;
+        public ReactiveCommand<List<Branch>> NewGenerateBranchesEvent;
         public static Action LoseAction;
         public static Action GenerateAction;
+        public static ReactiveCommand NewPlayer;
         private int _passBranchesAmount;
         private Queue<Branch> _queue;
         private Branch currBranch;
@@ -45,9 +48,13 @@ namespace PlayerSystem.TeleportSystem
 
         
         //Формируется очередь
-        
 
-        public void SendNewBranches(List<Branch> list)
+        public void Init()
+        {
+            NewPlayer = new ReactiveCommand();
+        }
+
+        public void SendNewBranches(List<Branch> list) 
         {
             if (_queue == null)
             {
@@ -101,12 +108,19 @@ namespace PlayerSystem.TeleportSystem
                }
                else
                {
+                   
                    timer.Stop();
                    LoseAction?.Invoke();
                    DeathJump(new Vector2(0, 2));
                    await UniTask.Delay(2000, DelayType.DeltaTime);
-
+                    //SendRecord(Score.ScoreCount);
                    _losePanelView.ShowPanel();
+                   if(PlayerPrefs.HasKey("player"))
+                        _playerScoreController.SendRecord(Score.ScoreCount);
+                   else
+                    NewPlayer.Execute(Unit.Default);
+                       
+                   
                }
 
            }
@@ -141,7 +155,12 @@ namespace PlayerSystem.TeleportSystem
                        DeathJump(new Vector2(-4.56f, 2));
                    }
                    await UniTask.Delay(2000, DelayType.DeltaTime);
+                   //SendRecord(Score.ScoreCount);
                    _losePanelView.ShowPanel();
+                   if(PlayerPrefs.HasKey("player"))
+                       _playerScoreController.SendRecord(Score.ScoreCount);
+                   else
+                       NewPlayer.Execute(Unit.Default);
                }
               
            }
@@ -175,12 +194,33 @@ namespace PlayerSystem.TeleportSystem
                        DeathJump(new Vector2(4.56f, 2));
                    }
                    await UniTask.Delay(2000, DelayType.DeltaTime);
-
+                   //SendRecord(Score.ScoreCount);
                   _losePanelView.ShowPanel();
+                  if(PlayerPrefs.HasKey("player"))
+                      _playerScoreController.SendRecord(Score.ScoreCount);
+                  else
+                      NewPlayer.Execute(Unit.Default);
                }
            }
        }
 
+       /*async void SendRecord(long score)
+       {
+           
+           PlayerPrefs.SetString("player", "Admin");
+           if (PlayerPrefs.HasKey("player"))
+           {
+               try
+               {
+                    await _db.UpdateScoreIfHigherAsync(PlayerPrefs.GetString("player"), score);
+
+               }
+               catch (Exception e)
+               {
+                   Debug.Log("Ошибка при отправке рекорда: " + e.Message);
+               }
+           }
+       }*/
        public void DeathJump(Vector2 vector)
        {
            
@@ -200,9 +240,10 @@ namespace PlayerSystem.TeleportSystem
            transform.DOJump(endValue, jumpPower, 1, duration);
        }
 
+       
        private void DisableKinematic()
        {
-           
+           SoundManager.Instance.Play("Lose");
            rb.isKinematic = false;
            camera.Follow = null;
        }

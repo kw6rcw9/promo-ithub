@@ -3,6 +3,7 @@ using System.Collections;
 using Cinemachine;
 using CoreSystem;
 using PlayerSystem.TeleportSystem;
+using SoundSystem;
 using UI;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -75,7 +76,7 @@ namespace TimerSystem
     
         public void DisableKinematic()
         {
-               print("какого хуя");
+             SoundManager.Instance.Play("Lose");  
             _losePanelView.ShowPanel();
         }
         public void Stop()

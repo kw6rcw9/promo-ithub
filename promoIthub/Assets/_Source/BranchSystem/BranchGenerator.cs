@@ -29,21 +29,10 @@ namespace BranchSystem
         private Branch _initialBranch;
         public void Init()
         {
-            // leftPrefab.TryGetComponent(out Branch leftBranch);
-            // _leftBranch = leftBranch;
-            // _leftBranch.IsCentered = leftBranch.IsCentered;
-            // _leftBranch.BranchSprite = leftBranch.BranchSprite;
-            // _leftBranch.TeleportPosition = leftBranch.TeleportPosition;
-            // _leftBranch.Type = BranchType.Left;
-            // rightPrefab.TryGetComponent(out Branch rightBranch);
-            // _rightBranch = rightBranch;
-            // _rightBranch.IsCentered = rightBranch.IsCentered;
-            // _rightBranch.BranchSprite = rightBranch.BranchSprite;
-            // _rightBranch.TeleportPosition = rightBranch.TeleportPosition;
-            // _rightBranch.Type = BranchType.Right;
+        
             _pool.InitPool(leftPrefab, maxPoolSize, parent);
             GenerateInitPool();
-            //player.transform.position = genBranchList[0].TeleportPosition.position;
+    
 
         }
 
@@ -136,64 +125,7 @@ namespace BranchSystem
             
             Generation(rnd, maxPoolSize / 2, true);
             
-            // for (int i = 0; i < maxPoolSize; i++)
-            // {
-            //     
-            //     _pool.TryGetFromPool(out GameObject branchInstance);
-            //     var ind = rnd.Next(0, 2);
-            //     
-            //     branchInstance.TryGetComponent(out Branch instance);
-            //     if (prevInd == ind)
-            //         repeat++;
-            //     else
-            //     {
-            //         prevInd = ind;
-            //         repeat = 0;
-            //     }
-            //     if (repeat == restriction && ind == 0)
-            //     {
-            //         ind = 1;
-            //     }
-            //     else if (repeat == restriction && ind == 1)
-            //     {
-            //         ind = 0;
-            //     }
-            //     switch (ind)
-            //     {
-            //
-            //         case 0:
-            //             instance.Type = _leftBranch.Type;
-            //             instance.BranchSprite = _leftBranch.BranchSprite;
-            //             instance.IsCentered = _leftBranch.IsCentered;
-            //             break;
-            //         case 1:
-            //             branchInstance.transform.rotation = new Quaternion(0,0,0, 0);
-            //             instance.Type = _rightBranch.Type;
-            //             instance.BranchSprite = _rightBranch.BranchSprite;
-            //             instance.IsCentered = _rightBranch.IsCentered;
-            //              //TODO instance.TeleportPosition = branchInstance.transform.GetChild(1);
-            //             break;
-            //     }
-            //
-            //     yTrans += 3;
-            //
-            //     branchInstance.transform.position += new Vector3(0, yTrans, 0);
-            //     
-            //     if (i == 0 && firstGenerate)
-            //     {
-            //         _startPoint = instance.TeleportPosition;
-            //         continue;
-            //     }
-            //     if (maxPoolSize / 2 == i || i == 0)
-            //     {
-            //         instance.IsCentered = true;
-            //     }
-            //
-            //     
-            //     _genBranchList.Add(instance);
-            // }
-            
-            // _teleportPlayer.SendNewBranches(_genBranchList);
+          
         }
 
         public async UniTask GenerateBranchesAsync()
