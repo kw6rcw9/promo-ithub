@@ -25,7 +25,9 @@ namespace BranchSystem
         private Branch _rightBranch;
         private bool _positionChanged = false;
         private Transform _startPoint;
-        private float _yTrans = -3;
+        [SerializeField] private float _yTrans = -3;
+        [SerializeField] private float _yUp = 1.5f;
+        [SerializeField] private float _xConst = 1.85f;
         private Branch _initialBranch;
         public void Init()
         {
@@ -95,8 +97,8 @@ namespace BranchSystem
                 }
 
 
-                _yTrans += 2.6f;
-                branchInstance.transform.position = new Vector3(0, _yTrans , 0);
+                _yTrans += _yUp;
+                branchInstance.transform.position = new Vector3(_xConst, _yTrans , 0);
                 
                 if (i == 0 && firstGenerate)
                 {
