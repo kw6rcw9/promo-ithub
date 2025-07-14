@@ -111,7 +111,7 @@ namespace PlayerSystem.TeleportSystem
                    
                    timer.Stop();
                    LoseAction?.Invoke();
-                   DeathJump(new Vector2(0, 2));
+                   DeathJump(new Vector2(0, 1));
                    await UniTask.Delay(2000, DelayType.DeltaTime);
                     //SendRecord(Score.ScoreCount);
                    _losePanelView.ShowPanel();
@@ -149,10 +149,10 @@ namespace PlayerSystem.TeleportSystem
                    timer.Stop();
                    LoseAction?.Invoke();
                    if(currBranch.Type == BranchType.Left)
-                    DeathJump(new Vector2(-2.56f, 2));
+                    DeathJump(new Vector2(-0.8f,1));
                    else
                    {
-                       DeathJump(new Vector2(-4.56f, 2));
+                       DeathJump(new Vector2(-1.8f,1));
                    }
                    await UniTask.Delay(2000, DelayType.DeltaTime);
                    //SendRecord(Score.ScoreCount);
@@ -188,10 +188,10 @@ namespace PlayerSystem.TeleportSystem
                    timer.Stop();
                    LoseAction?.Invoke();
                    if(currBranch.Type == BranchType.Right)
-                       DeathJump(new Vector2(2.56f, 2));
+                       DeathJump(new Vector2(0.8f, 1));
                    else
                    {
-                       DeathJump(new Vector2(4.56f, 2));
+                       DeathJump(new Vector2(1.8f, 1));
                    }
                    await UniTask.Delay(2000, DelayType.DeltaTime);
                    //SendRecord(Score.ScoreCount);

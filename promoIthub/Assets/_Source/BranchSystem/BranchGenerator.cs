@@ -132,7 +132,7 @@ namespace BranchSystem
 
         public async UniTask GenerateBranchesAsync()
         {
-            await UniTask.Delay(2000);
+            await UniTask.Delay(5000);
             Random rnd = new Random();
             if (_pool.Branches.Count == 0)
             {

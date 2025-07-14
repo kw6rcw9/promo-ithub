@@ -41,8 +41,9 @@ namespace ScoreSystem
             {
                 PlayerPrefs.SetInt("score", Score.ScoreCount);
             }
+            PlayerPrefs.Save();
             bestScore.text = PlayerPrefs.GetInt("score").ToString();
-            finalScore.text = text.text;
+            finalScore.text = Score.ScoreCount.ToString();
             
         }
         

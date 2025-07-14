@@ -97,10 +97,37 @@ namespace BackendSystem.Repositories
 
             return false; // имя не найдено
         }
-
-        public async UniTask UpdateScoreIfHigherAsync(string playerName, long newScore)
+        public async UniTask<long?> GetScoreByNameAsync(string name)
         {
-            // Получаем все данные с leaderboard
+            string url = "https://promoithub-default-rtdb.europe-west1.firebasedatabase.app/leaderboard.json";
+
+            UnityWebRequest request = UnityWebRequest.Get(url);
+            await request.SendWebRequest();
+
+            if (request.result != UnityWebRequest.Result.Success)
+            {
+                Debug.LogError("Ошибка получения счёта: " + request.error);
+                return null;
+            }
+
+            string json = request.downloadHandler.text;
+            Wrapper wrapper = ParseLeaderboardJson(json);
+            Dictionary<string, PlayerData> entries = wrapper.items;
+
+            foreach (var player in entries.Values)
+            {
+                if (player.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
+                {
+                    return player.Score;
+                }
+            }
+
+            Debug.LogWarning($"Игрок с именем '{name}' не найден.");
+            return null;
+        }
+
+        public async UniTask<bool> ChangePlayerNameAsync(string oldName, string newName)
+        {
             string url = "https://promoithub-default-rtdb.europe-west1.firebasedatabase.app/leaderboard.json";
 
             UnityWebRequest getRequest = UnityWebRequest.Get(url);
@@ -108,69 +135,128 @@ namespace BackendSystem.Repositories
 
             if (getRequest.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError("Ошибка загрузки: " + getRequest.error);
-                return;
+                Debug.LogError("Ошибка загрузки данных: " + getRequest.error);
+                return false;
             }
 
             string json = getRequest.downloadHandler.text;
-            
-            if (string.IsNullOrEmpty(json) || json == "null")
-            {
-                // Базы нет — создаём новую запись
-                await SendScoreAsync(playerName, newScore);
-                return;
-            }
-
-            // Преобразуем JSON в словарь
             Wrapper wrapper = ParseLeaderboardJson(json);
             Dictionary<string, PlayerData> entries = wrapper.items;
 
-            // Ищем игрока по имени
-            string playerKey = null;
-            long currentScore = -1;
-
             foreach (var kvp in entries)
             {
-                if (kvp.Value.Name == playerName)
+                if (kvp.Value.Name.Equals(oldName, StringComparison.OrdinalIgnoreCase))
                 {
-                    playerKey = kvp.Key;
-                    currentScore = kvp.Value.Score;
-                    break;
+                    string key = kvp.Key;
+                    long score = kvp.Value.Score;
+
+                    PlayerData updated = new PlayerData(newName, score);
+                    string updatedJson = JsonUtility.ToJson(updated);
+
+                    string updateUrl = $"https://promoithub-default-rtdb.europe-west1.firebasedatabase.app/leaderboard/{key}.json";
+
+                    UnityWebRequest putRequest = UnityWebRequest.Put(updateUrl, updatedJson);
+                    putRequest.SetRequestHeader("Content-Type", "application/json");
+
+                    await putRequest.SendWebRequest();
+
+                    if (putRequest.result != UnityWebRequest.Result.Success)
+                    {
+                        Debug.LogError("Ошибка обновления имени: " + putRequest.error);
+                        return false;
+                    }
+
+                    Debug.Log($"Имя игрока изменено: '{oldName}' → '{newName}'");
+                    return true;
                 }
             }
 
-            if (playerKey == null)
-            {
-                // Игрок не найден — добавляем новую запись
-                await SendScoreAsync(playerName, newScore);
-          
-                return;
-            }
-
-            if (newScore > currentScore)
-            {
-                // Обновляем запись
-                string updateUrl =
-                    $"https://promoithub-default-rtdb.europe-west1.firebasedatabase.app/leaderboard/{playerKey}.json";
-                PlayerData updatedData = new PlayerData(playerName, newScore);
-                string updatedJson = JsonUtility.ToJson(updatedData);
-
-                UnityWebRequest putRequest = UnityWebRequest.Put(updateUrl, updatedJson);
-                putRequest.SetRequestHeader("Content-Type", "application/json");
-
-                await putRequest.SendWebRequest();
-
-                if (putRequest.result != UnityWebRequest.Result.Success)
-                    Debug.LogError("Ошибка обновления: " + putRequest.error);
-                else
-                    Debug.Log("Рекорд обновлён!");
-     
-            }
-            else
-            {
-                Debug.Log("Новый счёт не выше текущего — не обновляем.");
-            }
+            Debug.LogWarning($"Игрок с именем '{oldName}' не найден.");
+            return false;
         }
+
+        public async UniTask UpdateScoreIfHigherAsync(string playerName, long newScore)
+        {
+    string url = "https://promoithub-default-rtdb.europe-west1.firebasedatabase.app/leaderboard.json";
+
+    UnityWebRequest getRequest = UnityWebRequest.Get(url);
+    await getRequest.SendWebRequest();
+
+    if (getRequest.result != UnityWebRequest.Result.Success)
+    {
+        Debug.LogError("Ошибка загрузки: " + getRequest.error);
+        return;
+    }
+
+    string json = getRequest.downloadHandler.text;
+
+    // Если база пустая
+    if (string.IsNullOrEmpty(json) || json == "null")
+    {
+        // Проверка на уникальность перед созданием
+        if (await CheckIfNameExistsAsync(playerName))
+        {
+            Debug.LogWarning("Имя уже существует, запись не создана.");
+            return;
+        }
+
+        await SendScoreAsync(playerName, newScore);
+        return;
+    }
+
+    // Преобразуем JSON в словарь
+    Wrapper wrapper = ParseLeaderboardJson(json);
+    Dictionary<string, PlayerData> entries = wrapper.items;
+
+    string playerKey = null;
+    long currentScore = -1;
+
+    foreach (var kvp in entries)
+    {
+        if (kvp.Value.Name.Equals(playerName, StringComparison.OrdinalIgnoreCase))
+        {
+            playerKey = kvp.Key;
+            currentScore = kvp.Value.Score;
+            break;
+        }
+    }
+
+    if (playerKey == null)
+    {
+        // Проверка на уникальность перед созданием
+        if (await CheckIfNameExistsAsync(playerName))
+        {
+            Debug.LogWarning("Имя уже существует, запись не создана.");
+            return;
+        }
+
+        await SendScoreAsync(playerName, newScore);
+        return;
+    }
+
+    if (newScore > currentScore)
+    {
+        string updateUrl = $"https://promoithub-default-rtdb.europe-west1.firebasedatabase.app/leaderboard/{playerKey}.json";
+
+        PlayerData updatedData = new PlayerData(playerName, newScore);
+        string updatedJson = JsonUtility.ToJson(updatedData);
+
+        UnityWebRequest putRequest = UnityWebRequest.Put(updateUrl, updatedJson);
+        putRequest.SetRequestHeader("Content-Type", "application/json");
+
+        await putRequest.SendWebRequest();
+
+        if (putRequest.result != UnityWebRequest.Result.Success)
+            Debug.LogError("Ошибка обновления: " + putRequest.error);
+        else
+            Debug.Log("Рекорд обновлён!");
+    }
+    else
+    {
+        Debug.Log("Новый счёт не выше текущего — не обновляем.");
+    }
+}
+
 
         private Wrapper ParseLeaderboardJson(string json)
         {

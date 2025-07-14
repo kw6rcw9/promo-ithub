@@ -1,4 +1,5 @@
 using BackendSystem.Core;
+using BackendSystem.MetricSystem;
 using BackendSystem.Repositories;
 using BranchSystem;
 using InputSystem;
@@ -23,10 +24,13 @@ namespace CoreSystem
         [SerializeField] private TimerView timerView;
         [SerializeField] private Timer timer;
         [SerializeField] private NewPlayerFormView newPlayerFormView;
+        [SerializeField] private Game game;
+        [SerializeField] private FirebaseBridge firebaseBridge;
         public override void InstallBindings()
         {
             
             Container.Bind<BranchGenerator>().FromInstance(generator).AsTransient().NonLazy();
+            Container.Bind<Game>().FromInstance(game).AsTransient().NonLazy();
             Container.Bind<NewPlayerFormView>().FromInstance(newPlayerFormView).AsTransient().NonLazy();
             Container.Bind<InputListener>().FromInstance(inputListener).AsTransient().NonLazy();
             Container.Bind<TeleportPlayer>().FromInstance(teleportPlayer).AsTransient().NonLazy();
@@ -38,6 +42,7 @@ namespace CoreSystem
             Container.Bind<Timer>().FromInstance(timer).AsTransient().NonLazy();
             Container.Bind<LosePanelView>().FromInstance(losePanelView).AsTransient().NonLazy();
             Container.Bind<Animator>().FromInstance(animator).AsTransient().NonLazy();
+            Container.Bind<FirebaseBridge>().FromInstance(firebaseBridge).AsTransient().NonLazy();
             
         }
     }

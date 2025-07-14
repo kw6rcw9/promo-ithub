@@ -60,7 +60,9 @@ namespace TimerSystem
     public void ReduceMaxTimer()
     {
         if (maxTime <= maxTimeLeft)
+        {
             return;
+        }
         maxTime -= reduceTimerAmount;
     }
     

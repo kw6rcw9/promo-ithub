@@ -17,6 +17,7 @@ namespace UI
         [SerializeField] private RectTransform panel;
         [SerializeField] private Image fadePanel;
         [SerializeField] private GameObject timer;
+        [SerializeField] private GameObject score;
         [SerializeField] private float duration = 0.5f;
         [SerializeField] private float fadeDuration = 0.5f;
         private Vector2 startPosition;
@@ -28,7 +29,7 @@ namespace UI
             // Запоминаем стартовую позицию (за экраном)
             startPosition = panel.anchoredPosition;
             // Конечная позиция - центр экрана
-            targetPosition = new Vector2(startPosition.x, 15);
+            targetPosition = new Vector2(startPosition.x, -10);
 
             // Начинаем с панели вне экрана
             panel.anchoredPosition = startPosition;
@@ -41,6 +42,7 @@ namespace UI
             panel.gameObject.SetActive(true); 
             panel.DOAnchorPos(targetPosition,duration).SetEase(easeType); 
             timer.SetActive(false);
+            score.SetActive(false);
             
         }
 

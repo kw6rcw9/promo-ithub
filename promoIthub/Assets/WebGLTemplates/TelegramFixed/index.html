@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Telegram Fixed</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        html, body {
+          margin: 0;
+          padding: 0;
+          background: #000;
+          overflow: hidden;
+          width: 100%;
+          height: 100%;
+        }
+  
+        #unity-container {
+          width: 540px;
+          height: 1140px;
+          margin: auto;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background: black;
+          box-shadow: 0 0 20px rgba(255,255,255,0.2);
+        }
+  
+        canvas {
+          width: 100% !important;
+          height: 100% !important;
+          background: black;
+          display: block;
+        }
+    </style>
+</head>
+<body>
+<div id="unity-container">
+    <canvas id="unity-canvas"></canvas>
+</div>
+
+<script>
+    var buildUrl = "Build";
+    var loaderUrl = buildUrl + "/build.loader.js";
+    var config = {
+      dataUrl: buildUrl + "/build.data",
+      frameworkUrl: buildUrl + "/build.framework.js",
+      codeUrl: buildUrl + "/build.wasm",
+      streamingAssetsUrl: "StreamingAssets",
+      companyName: "YourCompany",
+      productName: "YourProduct",
+      productVersion: "1.0",
+      devicePixelRatio: 1
+    };
+
+    var script = document.createElement("script");
+    script.src = loaderUrl;
+    script.onload = () => {
+      createUnityInstance(document.querySelector("#unity-canvas"), config, (progress) => {
+        // loading bar logic (optional)
+      }).then((unityInstance) => {
+        window.unityInstance = unityInstance;
+      });
+    };
+    document.body.appendChild(script);
+</script>
+</body>
+</html>
