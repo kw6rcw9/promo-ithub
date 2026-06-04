@@ -1,97 +1,68 @@
 <!DOCTYPE html>
-<html lang="en-us">
-  <head>
+<html>
+<head>
     <meta charset="utf-8" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0"
-    />
-    <title>Unity WebGL</title>
-
+    <title>Telegram Fixed</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-      html,
-      body {
-        margin: 0;
-        padding: 0;
-        height: 100vh;
-        overflow: hidden;
-        background: black;
-      }
-
-      canvas {
-        width: 100% !important;
-        height: 100% !important;
-        background: #000;
-        display: block;
-      }
-    </style>
-
-    <!-- ✅ Firebase SDK (старая версия, подходящая для Unity WebGL) -->
-     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
-
-    <script>
-       // Включаем debug режим — чтобы DebugView точно сработал
-      
-      const firebaseConfig = {
-        apiKey: "AIzaSyBbQn_8VcMjx5YUUSov8MRVLeDeo5wUNuA",
-        authDomain: "promoithub.firebaseapp.com",
-        databaseURL: "https://promoithub-default-rtdb.europe-west1.firebasedatabase.app",
-        projectId: "promoithub",
-        storageBucket: "promoithub.firebasestorage.app",
-        messagingSenderId: "744750948753",
-        appId: "1:744750948753:web:8576dbb3800f661044fa30",
-        measurementId: "G-WN4N1B0WGL"
-      };
-
-      firebase.initializeApp(firebaseConfig);
-      const analytics = firebase.analytics();
-
-      // ✅ Включаем сбор аналитики явно
-      firebase.analytics().setAnalyticsCollectionEnabled(true);
-
-      // ✅ Функция для Unity
-      function sendAnalyticsEvent(eventName, paramsJson) {
-        try {
-          const params = JSON.parse(paramsJson);
-          analytics.logEvent(eventName, params);
-          console.log("[Firebase] Event sent:", eventName, params);
-        } catch (e) {
-          console.error("[Firebase] Error parsing params", e);
+        html, body {
+          margin: 0;
+          padding: 0;
+          background: #000;
+          overflow: hidden;
+          width: 100%;
+          height: 100%;
         }
-      }
-       
-    </script>
-  </head>
+  
+        #unity-container {
+          width: 540px;
+          height: 1140px;
+          margin: auto;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background: black;
+          box-shadow: 0 0 20px rgba(255,255,255,0.2);
+        }
+  
+        canvas {
+          width: 100% !important;
+          height: 100% !important;
+          background: black;
+          display: block;
+        }
+    </style>
+</head>
+<body>
+<div id="unity-container">
+    <canvas id="unity-canvas"></canvas>
+</div>
 
-  <body>
-    <canvas id="unity-canvas" width="960" height="600"></canvas>
+<script>
+    var buildUrl = "Build";
+    var loaderUrl = buildUrl + "/build.loader.js";
+    var config = {
+      dataUrl: buildUrl + "/build.data",
+      frameworkUrl: buildUrl + "/build.framework.js",
+      codeUrl: buildUrl + "/build.wasm",
+      streamingAssetsUrl: "StreamingAssets",
+      companyName: "YourCompany",
+      productName: "YourProduct",
+      productVersion: "1.0",
+      devicePixelRatio: 1
+    };
 
-    <!-- Замените пути на свои файлы билда -->
-    <script src="Build/TgBuild.loader.js"></script>
-    <script>
-       let telegramAppChatLabs = window.Telegram.WebApp;
-      let firstName = telegramAppChatLabs.initDataUnsafe.user.username;
-      var gameInstance = null;
-      createUnityInstance(document.querySelector("#unity-canvas"), {
-        dataUrl: "Build/TgBuild.data",
-        frameworkUrl: "Build/TgBuild.framework.js",
-        codeUrl: "Build/TgBuild.wasm",
-        streamingAssetsUrl: "StreamingAssets",
-        companyName: "DefaultCompany",
-        productName: "promoIthub",
-        productVersion: "1.0",
+    var script = document.createElement("script");
+    script.src = loaderUrl;
+    script.onload = () => {
+      createUnityInstance(document.querySelector("#unity-canvas"), config, (progress) => {
+        // loading bar logic (optional)
       }).then((unityInstance) => {
-            myGameInstance = unityInstance;
-            myGameInstance.SendMessage('TELEGRAM', 'JsSendInfo', firstName);
-            
-        });
-    </script>
-    <script>
-      Telegram.WebApp.expand()
-      Telegram.WebApp.ready()
-    </script>
-  </body>
+        window.unityInstance = unityInstance;
+      });
+    };
+    document.body.appendChild(script);
+</script>
+</body>
 </html>
