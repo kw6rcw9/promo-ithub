@@ -2242,7 +2242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80a46e4cd6a8b0e479d3a1628065b4ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  siteUrl: https://ithub.ru/
+  siteUrl: https://ithubcollege.ru/?utm_source=game&utm_medium=cpc&utm_campaign=knopka_igra
   tgUrl: https://t.me/ithubgame
 --- !u!1 &486107480
 GameObject:
@@ -4494,7 +4494,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: dd18cc5c7437e6549a77dfbf07b2ca1b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 21ada3393b8b14289a991f068d6ba4d6, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

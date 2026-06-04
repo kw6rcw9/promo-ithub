@@ -14,7 +14,7 @@ namespace BackendSystem
 
         [Inject] private FirebaseBridge _bridge;
 
-        public string siteUrl = "https://ithub.ru/";
+        public string siteUrl = "https://ithubcollege.ru/?utm_source=game&utm_medium=cpc&utm_campaign=knopka_igra";
         public string tgUrl = "https://t.me/ithubgame";
 
         public void OpenSite()
